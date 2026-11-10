@@ -16,6 +16,7 @@ import { Route as ProjectsProjectIdIndexRouteImport } from './routes/projects.$p
 import { Route as ProjectsProjectIdScriptRouteImport } from './routes/projects.$projectId.script'
 import { Route as ProjectsProjectIdStoryboardRouteImport } from './routes/projects.$projectId.storyboard'
 import { Route as ProjectsProjectIdVoiceRouteImport } from './routes/projects.$projectId.voice'
+import { Route as ProjectsProjectIdWorkspaceRouteImport } from './routes/projects.$projectId.workspace'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,6 +54,12 @@ const ProjectsProjectIdVoiceRoute = ProjectsProjectIdVoiceRouteImport.update({
   path: '/voice',
   getParentRoute: () => ProjectsProjectIdRoute,
 } as any)
+const ProjectsProjectIdWorkspaceRoute =
+  ProjectsProjectIdWorkspaceRouteImport.update({
+    id: '/workspace',
+    path: '/workspace',
+    getParentRoute: () => ProjectsProjectIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/projects/$projectId/script': typeof ProjectsProjectIdScriptRoute
   '/projects/$projectId/storyboard': typeof ProjectsProjectIdStoryboardRoute
   '/projects/$projectId/voice': typeof ProjectsProjectIdVoiceRoute
+  '/projects/$projectId/workspace': typeof ProjectsProjectIdWorkspaceRoute
   '/projects/$projectId/': typeof ProjectsProjectIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +77,7 @@ export interface FileRoutesByTo {
   '/projects/$projectId/script': typeof ProjectsProjectIdScriptRoute
   '/projects/$projectId/storyboard': typeof ProjectsProjectIdStoryboardRoute
   '/projects/$projectId/voice': typeof ProjectsProjectIdVoiceRoute
+  '/projects/$projectId/workspace': typeof ProjectsProjectIdWorkspaceRoute
   '/projects/$projectId': typeof ProjectsProjectIdIndexRoute
 }
 export interface FileRoutesById {
@@ -79,6 +88,7 @@ export interface FileRoutesById {
   '/projects/$projectId/script': typeof ProjectsProjectIdScriptRoute
   '/projects/$projectId/storyboard': typeof ProjectsProjectIdStoryboardRoute
   '/projects/$projectId/voice': typeof ProjectsProjectIdVoiceRoute
+  '/projects/$projectId/workspace': typeof ProjectsProjectIdWorkspaceRoute
   '/projects/$projectId/': typeof ProjectsProjectIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +100,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/script'
     | '/projects/$projectId/storyboard'
     | '/projects/$projectId/voice'
+    | '/projects/$projectId/workspace'
     | '/projects/$projectId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -98,6 +109,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/script'
     | '/projects/$projectId/storyboard'
     | '/projects/$projectId/voice'
+    | '/projects/$projectId/workspace'
     | '/projects/$projectId'
   id:
     | '__root__'
@@ -107,6 +119,7 @@ export interface FileRouteTypes {
     | '/projects/$projectId/script'
     | '/projects/$projectId/storyboard'
     | '/projects/$projectId/voice'
+    | '/projects/$projectId/workspace'
     | '/projects/$projectId/'
   fileRoutesById: FileRoutesById
 }
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsProjectIdVoiceRouteImport
       parentRoute: typeof ProjectsProjectIdRoute
     }
+    '/projects/$projectId/workspace': {
+      id: '/projects/$projectId/workspace'
+      path: '/workspace'
+      fullPath: '/projects/$projectId/workspace'
+      preLoaderRoute: typeof ProjectsProjectIdWorkspaceRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
   }
 }
 
@@ -174,6 +194,7 @@ interface ProjectsProjectIdRouteChildren {
   ProjectsProjectIdScriptRoute: typeof ProjectsProjectIdScriptRoute
   ProjectsProjectIdStoryboardRoute: typeof ProjectsProjectIdStoryboardRoute
   ProjectsProjectIdVoiceRoute: typeof ProjectsProjectIdVoiceRoute
+  ProjectsProjectIdWorkspaceRoute: typeof ProjectsProjectIdWorkspaceRoute
   ProjectsProjectIdIndexRoute: typeof ProjectsProjectIdIndexRoute
 }
 
@@ -181,6 +202,7 @@ const ProjectsProjectIdRouteChildren: ProjectsProjectIdRouteChildren = {
   ProjectsProjectIdScriptRoute: ProjectsProjectIdScriptRoute,
   ProjectsProjectIdStoryboardRoute: ProjectsProjectIdStoryboardRoute,
   ProjectsProjectIdVoiceRoute: ProjectsProjectIdVoiceRoute,
+  ProjectsProjectIdWorkspaceRoute: ProjectsProjectIdWorkspaceRoute,
   ProjectsProjectIdIndexRoute: ProjectsProjectIdIndexRoute,
 }
 
