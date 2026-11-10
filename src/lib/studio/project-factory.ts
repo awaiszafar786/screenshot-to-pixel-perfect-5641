@@ -20,6 +20,7 @@ export function createScene(partial: Partial<Scene> = {}): Scene {
     durationSec: 5,
     mediaId: null,
     ...partial,
+    id: partial.id || uid("scn"),
   };
 }
 
