@@ -29,7 +29,7 @@ function TabLink({ to, icon, label, exact }: { to: "/" | "/providers"; icon: Rea
   return (
     <Link
       to={to}
-      activeOptions={{ exact }}
+      activeOptions={{ exact: Boolean(exact) }}
       className="group flex flex-col items-center gap-1 py-1.5 text-muted-foreground transition-colors data-[status=active]:text-primary"
     >
       {({ isActive }: { isActive: boolean }) => (

@@ -42,13 +42,13 @@ function VoicePage() {
 
   const fillFromScenes = () => {
     const text = project.scenes.map((s) => s.narration.trim()).filter(Boolean).join("\n\n");
-    if (!text) return toast.error("Your storyboard has no narration yet.");
+    if (!text) return void toast.error("Your storyboard has no narration yet.");
     if (voice.text.trim() && !window.confirm("Replace the current voiceover text?")) return;
     setVoice({ text });
   };
   const fillFromScript = () => {
     const text = project.script.body.trim();
-    if (!text) return toast.error("Your script is empty.");
+    if (!text) return void toast.error("Your script is empty.");
     if (voice.text.trim() && !window.confirm("Replace the current voiceover text?")) return;
     setVoice({ text });
   };
@@ -216,7 +216,7 @@ function DevicePreview({ text, language }: { text: string; language: VoiceLangua
       setSpeaking(false);
       return;
     }
-    if (!text.trim()) return toast.error("Add some voiceover text first.");
+    if (!text.trim()) return void toast.error("Add some voiceover text first.");
     const utter = new SpeechSynthesisUtterance(text);
     const lang = language === "urdu" ? "ur" : "en";
     utter.lang = language === "urdu" ? "ur-PK" : "en-US";
