@@ -10,33 +10,123 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProvidersRouteImport } from './routes/providers'
+import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
+import { Route as ProjectsProjectIdIndexRouteImport } from './routes/projects.$projectId.index'
+import { Route as ProjectsProjectIdScriptRouteImport } from './routes/projects.$projectId.script'
+import { Route as ProjectsProjectIdStoryboardRouteImport } from './routes/projects.$projectId.storyboard'
+import { Route as ProjectsProjectIdVoiceRouteImport } from './routes/projects.$projectId.voice'
+import { Route as ProjectsProjectIdWorkspaceRouteImport } from './routes/projects.$projectId.workspace'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProvidersRoute = ProvidersRouteImport.update({
+  id: '/providers',
+  path: '/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
+  id: '/projects/$projectId',
+  path: '/projects/$projectId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsProjectIdIndexRoute = ProjectsProjectIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProjectsProjectIdRoute,
+} as any)
+const ProjectsProjectIdScriptRoute = ProjectsProjectIdScriptRouteImport.update({
+  id: '/script',
+  path: '/script',
+  getParentRoute: () => ProjectsProjectIdRoute,
+} as any)
+const ProjectsProjectIdStoryboardRoute =
+  ProjectsProjectIdStoryboardRouteImport.update({
+    id: '/storyboard',
+    path: '/storyboard',
+    getParentRoute: () => ProjectsProjectIdRoute,
+  } as any)
+const ProjectsProjectIdVoiceRoute = ProjectsProjectIdVoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => ProjectsProjectIdRoute,
+} as any)
+const ProjectsProjectIdWorkspaceRoute =
+  ProjectsProjectIdWorkspaceRouteImport.update({
+    id: '/workspace',
+    path: '/workspace',
+    getParentRoute: () => ProjectsProjectIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/providers': typeof ProvidersRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
+  '/projects/$projectId/script': typeof ProjectsProjectIdScriptRoute
+  '/projects/$projectId/storyboard': typeof ProjectsProjectIdStoryboardRoute
+  '/projects/$projectId/voice': typeof ProjectsProjectIdVoiceRoute
+  '/projects/$projectId/workspace': typeof ProjectsProjectIdWorkspaceRoute
+  '/projects/$projectId/': typeof ProjectsProjectIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/providers': typeof ProvidersRoute
+  '/projects/$projectId/script': typeof ProjectsProjectIdScriptRoute
+  '/projects/$projectId/storyboard': typeof ProjectsProjectIdStoryboardRoute
+  '/projects/$projectId/voice': typeof ProjectsProjectIdVoiceRoute
+  '/projects/$projectId/workspace': typeof ProjectsProjectIdWorkspaceRoute
+  '/projects/$projectId': typeof ProjectsProjectIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/providers': typeof ProvidersRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRouteWithChildren
+  '/projects/$projectId/script': typeof ProjectsProjectIdScriptRoute
+  '/projects/$projectId/storyboard': typeof ProjectsProjectIdStoryboardRoute
+  '/projects/$projectId/voice': typeof ProjectsProjectIdVoiceRoute
+  '/projects/$projectId/workspace': typeof ProjectsProjectIdWorkspaceRoute
+  '/projects/$projectId/': typeof ProjectsProjectIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/providers'
+    | '/projects/$projectId'
+    | '/projects/$projectId/script'
+    | '/projects/$projectId/storyboard'
+    | '/projects/$projectId/voice'
+    | '/projects/$projectId/workspace'
+    | '/projects/$projectId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/providers'
+    | '/projects/$projectId/script'
+    | '/projects/$projectId/storyboard'
+    | '/projects/$projectId/voice'
+    | '/projects/$projectId/workspace'
+    | '/projects/$projectId'
+  id:
+    | '__root__'
+    | '/'
+    | '/providers'
+    | '/projects/$projectId'
+    | '/projects/$projectId/script'
+    | '/projects/$projectId/storyboard'
+    | '/projects/$projectId/voice'
+    | '/projects/$projectId/workspace'
+    | '/projects/$projectId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProvidersRoute: typeof ProvidersRoute
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +138,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/providers': {
+      id: '/providers'
+      path: '/providers'
+      fullPath: '/providers'
+      preLoaderRoute: typeof ProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/$projectId/': {
+      id: '/projects/$projectId/'
+      path: '/'
+      fullPath: '/projects/$projectId/'
+      preLoaderRoute: typeof ProjectsProjectIdIndexRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
+    '/projects/$projectId/script': {
+      id: '/projects/$projectId/script'
+      path: '/script'
+      fullPath: '/projects/$projectId/script'
+      preLoaderRoute: typeof ProjectsProjectIdScriptRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
+    '/projects/$projectId/storyboard': {
+      id: '/projects/$projectId/storyboard'
+      path: '/storyboard'
+      fullPath: '/projects/$projectId/storyboard'
+      preLoaderRoute: typeof ProjectsProjectIdStoryboardRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
+    '/projects/$projectId/voice': {
+      id: '/projects/$projectId/voice'
+      path: '/voice'
+      fullPath: '/projects/$projectId/voice'
+      preLoaderRoute: typeof ProjectsProjectIdVoiceRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
+    '/projects/$projectId/workspace': {
+      id: '/projects/$projectId/workspace'
+      path: '/workspace'
+      fullPath: '/projects/$projectId/workspace'
+      preLoaderRoute: typeof ProjectsProjectIdWorkspaceRouteImport
+      parentRoute: typeof ProjectsProjectIdRoute
+    }
   }
 }
 
+interface ProjectsProjectIdRouteChildren {
+  ProjectsProjectIdScriptRoute: typeof ProjectsProjectIdScriptRoute
+  ProjectsProjectIdStoryboardRoute: typeof ProjectsProjectIdStoryboardRoute
+  ProjectsProjectIdVoiceRoute: typeof ProjectsProjectIdVoiceRoute
+  ProjectsProjectIdWorkspaceRoute: typeof ProjectsProjectIdWorkspaceRoute
+  ProjectsProjectIdIndexRoute: typeof ProjectsProjectIdIndexRoute
+}
+
+const ProjectsProjectIdRouteChildren: ProjectsProjectIdRouteChildren = {
+  ProjectsProjectIdScriptRoute: ProjectsProjectIdScriptRoute,
+  ProjectsProjectIdStoryboardRoute: ProjectsProjectIdStoryboardRoute,
+  ProjectsProjectIdVoiceRoute: ProjectsProjectIdVoiceRoute,
+  ProjectsProjectIdWorkspaceRoute: ProjectsProjectIdWorkspaceRoute,
+  ProjectsProjectIdIndexRoute: ProjectsProjectIdIndexRoute,
+}
+
+const ProjectsProjectIdRouteWithChildren =
+  ProjectsProjectIdRoute._addFileChildren(ProjectsProjectIdRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProvidersRoute: ProvidersRoute,
+  ProjectsProjectIdRoute: ProjectsProjectIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
