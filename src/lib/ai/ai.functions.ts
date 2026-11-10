@@ -57,21 +57,10 @@ function languageGuide(language: ScriptLanguage) {
   return "Write all spoken text in clear, natural English.";
 }
 
-async function runSafely<T>(fn: () => Promise<T>): Promise<AiResult<T>> {
-  try {
-    return { ok: true, data: await fn() };
-  } catch (error) {
-    const { AiGenerationError } = await import("./gateway.server");
-    if (error instanceof AiGenerationError) return { ok: false, error: error.message, status: error.status };
-    console.error(error);
-    return { ok: false, error: "Something went wrong while generating. Please try again.", status: 500 };
-  }
-}
-
 export const generateScript = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => scriptInput.parse(input))
-  .handler(async ({ data }) =>
-    runSafely(async () => {
+  .handler(async ({ data }): Promise<AiResult<GeneratedScript>> =>
+    (await import("./gateway.server")).runSafely(async () => {
       const { generateStructured } = await import("./gateway.server");
       const words = Math.round((data.durationSec / 60) * (data.language === "english" ? 150 : 130));
       return generateStructured({
@@ -100,8 +89,8 @@ export const generateScript = createServerFn({ method: "POST" })
 
 export const generateStoryboard = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => storyboardInput.parse(input))
-  .handler(async ({ data }) =>
-    runSafely(async () => {
+  .handler(async ({ data }): Promise<AiResult<GeneratedStoryboard>> =>
+    (await import("./gateway.server")).runSafely(async () => {
       const { generateStructured } = await import("./gateway.server");
       const targetScenes = Math.min(14, Math.max(3, Math.round(data.durationSec / 6)));
       const result = await generateStructured({

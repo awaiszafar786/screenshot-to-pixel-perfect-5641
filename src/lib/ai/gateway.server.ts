@@ -94,3 +94,15 @@ export async function generateStructured<T>(options: {
     throw toAiError(streamError ?? error);
   }
 }
+
+export async function runSafely<T>(
+  fn: () => Promise<T>,
+): Promise<{ ok: true; data: T } | { ok: false; error: string; status: number }> {
+  try {
+    return { ok: true, data: await fn() };
+  } catch (error) {
+    if (error instanceof AiGenerationError) return { ok: false, error: error.message, status: error.status };
+    console.error(error);
+    return { ok: false, error: "Something went wrong while generating. Please try again.", status: 500 };
+  }
+}
