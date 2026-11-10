@@ -30,7 +30,7 @@ export const Route = createFileRoute("/projects/$projectId/workspace")({
 function sceneAt(scenes: Scene[], t: number) {
   let start = 0;
   for (let i = 0; i < scenes.length; i++) {
-    const end = start + scenes[i].durationSec;
+    const end = start + (scenes[i]?.durationSec ?? 0);
     if (t < end) return { index: i, start };
     start = end;
   }
@@ -101,14 +101,14 @@ function WorkspacePage() {
 
   const seekToScene = (index: number) => {
     let start = 0;
-    for (let i = 0; i < index; i++) start += scenes[i].durationSec;
+    for (let i = 0; i < index; i++) start += scenes[i]?.durationSec ?? 0;
     setTime(start);
     if (audioRef.current) audioRef.current.currentTime = start;
     if (scenes[index]) setSelectedId(scenes[index].id);
   };
 
   const togglePlay = () => {
-    if (!scenes.length) return toast.error("Add a clip to the timeline first.");
+    if (!scenes.length) return void toast.error("Add a clip to the timeline first.");
     if (time >= total) setTime(0);
     setPlaying((p) => !p);
   };
@@ -131,7 +131,7 @@ function WorkspacePage() {
       const target = assignAfterUpload.current;
       update((p) => ({
         media: [...p.media, ...items],
-        scenes: target ? p.scenes.map((s) => (s.id === target ? { ...s, mediaId: items[0].id } : s)) : p.scenes,
+        scenes: target ? p.scenes.map((s) => (s.id === target ? { ...s, mediaId: items[0]!.id } : s)) : p.scenes,
       }));
       toast.success(`${items.length} file${items.length > 1 ? "s" : ""} added`);
     }

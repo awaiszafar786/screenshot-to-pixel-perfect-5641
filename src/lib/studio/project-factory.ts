@@ -10,7 +10,6 @@ export function uid(prefix = "id") {
 
 export function createScene(partial: Partial<Scene> = {}): Scene {
   return {
-    id: uid("scn"),
     title: "New scene",
     narration: "",
     subtitle: "",
@@ -46,7 +45,7 @@ export function createProject(input: Partial<Pick<Project, "name" | "description
 
 /** Fill any fields missing from older saved or imported projects. */
 export function normalizeProject(raw: Partial<Project> & { id?: string }): Project {
-  const base = createProject({ name: raw.name });
+  const base = createProject(raw.name ? { name: raw.name } : {});
   return {
     ...base,
     ...raw,
@@ -67,6 +66,6 @@ export function moveItem<T>(list: T[], from: number, to: number): T[] {
   if (to < 0 || to >= list.length || from === to) return list;
   const next = list.slice();
   const [item] = next.splice(from, 1);
-  next.splice(to, 0, item);
+  next.splice(to, 0, item as T);
   return next;
 }

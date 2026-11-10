@@ -151,7 +151,7 @@ function StoryboardPage() {
                     variant="ghost"
                     size="icon-sm"
                     aria-label="Duplicate scene"
-                    onClick={() => setScenes((l) => [...l.slice(0, i + 1), createScene({ ...scene, id: undefined, title: `${scene.title} (copy)` }), ...l.slice(i + 1)])}
+                    onClick={() => setScenes((l) => [...l.slice(0, i + 1), createScene({ ...scene, id: "", title: `${scene.title} (copy)` }), ...l.slice(i + 1)])}
                   >
                     <CopyPlus />
                   </Button>
